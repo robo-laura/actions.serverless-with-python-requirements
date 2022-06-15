@@ -1,10 +1,15 @@
-name: 'Serverless with Python Requirements'
-description: 'Javascript action that runs a Serverless deploy using the serverless-python-requirements plugin.'
+name: 'Serverless Deploy with Python Requirements'
+description: 'This is a fork for dhollerbach repo.'
 inputs:
-  args:
+  config_args:
     default: ''
-    description: 'Additional arguments you want to set'
+    description: 'Additional arguments you want to set for credentials configs'
     required: false
+  deploy_args:
+    default: ''
+    description: 'Additional arguments you want to set for deploy command'
+    required: false
+
 
 runs:
   using: 'node12'

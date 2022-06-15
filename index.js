@@ -5,7 +5,8 @@ code = execSync('npm install exeq --save')
 var exeq = require('exeq')
 
 //  Input variables
-var ARGS = core.getInput('args')
+var CONFIG_ARGS = core.getInput('config_args')
+var DEPLOY_ARGS = core.getInput('deploy_args')
 
 //  Installs Serverless and specified plugins
 async function installServerlessAndPlugins() {
@@ -20,11 +21,13 @@ async function installServerlessAndPlugins() {
 //  Runs Serverless deploy using SERVERLESS_ACCESS_KEY if specified, else AWS Credentials
 async function runServerlessDeploy() {
   await exeq(
-    `echo Running sls deploy ${ARGS}...`,
+    `echo Running sls deploy...`,
+    `echo deploy_args ${DEPLOY_ARGS}`,
+    `echo credentials_args  ${CONFIG_ARGS}`,
     `if [ ${process.env.AWS_ACCESS_KEY_ID} ] && [ ${process.env.AWS_SECRET_ACCESS_KEY} ]; then
-      sls config credentials --provider aws --key ${process.env.AWS_ACCESS_KEY_ID} --secret ${process.env.AWS_SECRET_ACCESS_KEY} ${ARGS}
+      sls config credentials --provider aws --key ${process.env.AWS_ACCESS_KEY_ID} --secret ${process.env.AWS_SECRET_ACCESS_KEY} ${CONFIG_ARGS}
     fi`,
-    `sls deploy ${ARGS}`
+    `sls deploy ${DEPLOY_ARGS}`
   )
 }
 
